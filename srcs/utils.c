@@ -6,7 +6,7 @@
 /*   By: antonweizmann <antonweizmann@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 11:16:00 by antonweizma       #+#    #+#             */
-/*   Updated: 2024/05/02 11:18:58 by antonweizma      ###   ########.fr       */
+/*   Updated: 2024/05/03 12:56:03 by antonweizma      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,3 +39,40 @@ int	ft_atoi(const char *str)
 	return (result);
 }
 
+void	ft_putnbr_fd(int n, int fd)
+{
+	long	nb;
+
+	nb = n;
+	if (nb < 0)
+	{
+		nb *= -1;
+		ft_putchar_fd('-', fd);
+	}
+	if (nb > 9)
+		ft_putnbr_fd(nb / 10, fd);
+	else
+	{
+		ft_putchar_fd(nb + 48, fd);
+		return ;
+	}
+	ft_putnbr_fd(nb % 10, fd);
+}
+
+void	ft_putstr_fd(char *s, int fd)
+{
+	while (*s)
+		write (fd, s++, sizeof(*s));
+}
+
+void	ft_putphilo_msg(char *s, t_philo *philo)
+{
+	lock_mutex(philo->writing_lock, philo);
+	ft_putnbr_fd(get_time(), 1);
+	ft_putstr_fd(" ", 1);
+	ft_putnbr_fd(philo->id, 1);
+	ft_putstr_fd(" ", 1);
+	ft_putstr_fd(s, 1);
+	ft_putstr_fd("\n", 1);
+	unlock_mutex(philo->writing_lock, philo);
+}
