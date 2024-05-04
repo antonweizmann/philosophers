@@ -6,7 +6,7 @@
 /*   By: antonweizmann <antonweizmann@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 11:08:47 by antonweizma       #+#    #+#             */
-/*   Updated: 2024/05/04 12:18:53 by antonweizma      ###   ########.fr       */
+/*   Updated: 2024/05/04 21:03:20 by antonweizma      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,9 @@ void	start_threads(t_control *control, int num_philo)
 }
 int	main(int argc, char **argv)
 {
-	t_control	control;
-	t_philo		philo[MAX_PHILO];
+	t_control		control;
+	t_philo			philo[MAX_PHILO];
+	pthread_mutex_t	eating_locks[MAX_PHILO];
 
 	if (ft_atoi(argv[1]) == 1)
 	{
@@ -53,7 +54,7 @@ int	main(int argc, char **argv)
 	}
 	if (check_input(argv, argc) == 1)
 		return (1);
-	init_control(&control, philo);
+	init_control(&control, philo, eating_locks);
 	init_philo(philo, argv, &control);
 	start_threads(&control, ft_atoi(argv[1]));
 	// clean_up(NULL, &control);

@@ -6,7 +6,7 @@
 /*   By: antonweizmann <antonweizmann@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 12:49:50 by antonweizma       #+#    #+#             */
-/*   Updated: 2024/05/04 13:27:28 by antonweizma      ###   ########.fr       */
+/*   Updated: 2024/05/04 21:03:01 by antonweizma      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,13 @@ void	clean_up(char *str, t_control *control)
 	i = 0;
 	ft_putstr_fd(str, 2);
 	pthread_mutex_destroy(&control->writing_lock);
-	pthread_mutex_destroy(&control->eating_lock);
 	pthread_mutex_destroy(&control->error_lock);
 	pthread_mutex_destroy(&control->dead_lock);
 	while (i < control->num_philo)
-		pthread_mutex_destroy(control->philos[i++].r_fork);
+	{
+		pthread_mutex_destroy(control->philos[i].r_fork);
+		pthread_mutex_destroy(&control->eating_locks[i]);
+		i++;
+	}
 	exit(1);
 }

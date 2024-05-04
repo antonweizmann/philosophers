@@ -6,7 +6,7 @@
 /*   By: antonweizmann <antonweizmann@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 09:41:51 by antonweizma       #+#    #+#             */
-/*   Updated: 2024/05/04 13:35:30 by antonweizma      ###   ########.fr       */
+/*   Updated: 2024/05/04 21:48:57 by antonweizma      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	init_philo (t_philo *philo, char **argv, t_control *control)
 
 	i = 0;
 	init_forks(forks, ft_atoi(argv[1]));
+	init_forks(control->eating_locks, ft_atoi(argv[1]));
 	while (i < ft_atoi(argv[1]))
 	{
 		philo[i].id = i + 1;
@@ -39,6 +40,8 @@ void	init_philo (t_philo *philo, char **argv, t_control *control)
 		philo[i].time_to_sleep = ft_atoi(argv[4]);
 		if (argv[5])
 			philo[i].total_meals = ft_atoi(argv[5]);
+		else
+			philo[i].total_meals = -1;
 		philo[i].eating = 0;
 		philo[i].total_eaten_meals = 0;
 		philo[i].time_last_meal = get_time();
@@ -48,22 +51,22 @@ void	init_philo (t_philo *philo, char **argv, t_control *control)
 		philo[i].error_lock = &control->error_lock;
 		philo[i].dead_lock = &control->dead_lock;
 		philo[i].writing_lock = &control->writing_lock;
-		philo[i].eating_lock = &control->eating_lock;
+		philo[i].eating_lock = &control->eating_locks[i];
 		philo[i].l_fork = &forks[i];
 		philo[i].r_fork = &forks[(i + 1) % ft_atoi(argv[1])];
 		i++;
 	}
 }
 
-void	init_control(t_control *control, t_philo *philo)
+void	init_control(t_control *control, t_philo *philo, pthread_mutex_t *eating_locks)
 {
 	control->dead = 0;
 	control->error = 0;
 	control->philos = philo;
+	control->eating_locks = eating_locks;
 	pthread_mutex_init(&control->error_lock, NULL);
 	pthread_mutex_init(&control->dead_lock, NULL);
 	pthread_mutex_init(&control->writing_lock, NULL);
-	pthread_mutex_init(&control->eating_lock, NULL);
 }
 
 int	check_chars(char *str)

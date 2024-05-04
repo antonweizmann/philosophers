@@ -6,7 +6,7 @@
 /*   By: antonweizmann <antonweizmann@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 12:04:32 by antonweizma       #+#    #+#             */
-/*   Updated: 2024/05/04 13:41:13 by antonweizma      ###   ########.fr       */
+/*   Updated: 2024/05/04 22:02:27 by antonweizma      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,16 @@ int	dead_check(t_philo *philo)
 void	philo_eat(t_philo *philo)
 {
 	lock_mutex(philo->r_fork, philo, NULL);
-	ft_putphilo_msg("has taken a fork", philo);
 	lock_mutex(philo->l_fork, philo, NULL);
+	ft_putphilo_msg("has taken a fork", philo);
 	ft_putphilo_msg("has taken a fork", philo);
 	if (dead_check(philo))
 		return (unlock_mutex(philo->r_fork, philo, NULL), unlock_mutex(philo->l_fork, philo, NULL));
-	philo->eating = 1;
 	ft_putphilo_msg("is eating", philo);
+	philo->eating = 1;
 	lock_mutex(philo->eating_lock, philo, NULL);
 	philo->time_last_meal = get_time();
-	philo->total_eaten_meals += 1;
+	philo->total_eaten_meals++;
 	unlock_mutex(philo->eating_lock, philo, NULL);
 	ms_sleep(philo->time_to_eat);
 	philo->eating = 0;

@@ -6,7 +6,7 @@
 /*   By: antonweizmann <antonweizmann@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 11:08:51 by antonweizma       #+#    #+#             */
-/*   Updated: 2024/05/04 12:34:49 by antonweizma      ###   ########.fr       */
+/*   Updated: 2024/05/04 21:22:12 by antonweizma      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,13 @@ typedef struct s_philo
 {
 	pthread_t			thread;
 	int					id;
-	unsigned int		time_to_die;
+	long		time_to_die;
 	unsigned int		time_to_eat;
 	unsigned int		time_to_sleep;
 	int					total_meals;
 	int					eating;
 	int					total_eaten_meals;
-	unsigned int		time_last_meal;
+	long		time_last_meal;
 	unsigned int		start_time;
 	int					*dead;
 	int					*error;
@@ -52,7 +52,7 @@ typedef struct s_control
 	int					error;
 	pthread_mutex_t		error_lock;
 	pthread_mutex_t		dead_lock;
-	pthread_mutex_t		eating_lock;
+	pthread_mutex_t		*eating_locks;
 	pthread_mutex_t		writing_lock;
 }	t_control;
 
@@ -70,7 +70,7 @@ void					unlock_mutex(pthread_mutex_t *mutex, t_philo *philo, t_control *control
 
 // Init
 void					init_philo (t_philo *philo, char **argv, t_control *control);
-void					init_control(t_control *control, t_philo *philo);
+void					init_control(t_control *control, t_philo *philo, pthread_mutex_t *eating_locks);
 int						check_input(char **argv, int argc);
 
 
