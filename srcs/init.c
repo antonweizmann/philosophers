@@ -6,7 +6,7 @@
 /*   By: antonweizmann <antonweizmann@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 09:41:51 by antonweizma       #+#    #+#             */
-/*   Updated: 2024/05/04 13:25:36 by antonweizma      ###   ########.fr       */
+/*   Updated: 2024/05/04 13:35:30 by antonweizma      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	init_forks(pthread_mutex_t *forks, int num_philo)
 void	init_philo (t_philo *philo, char **argv, t_control *control)
 {
 	int				i;
-	pthread_mutex_t	forks[ft_atoi(argv[1])];
+	pthread_mutex_t	forks[MAX_PHILO];
 
 	i = 0;
 	init_forks(forks, ft_atoi(argv[1]));
@@ -50,7 +50,7 @@ void	init_philo (t_philo *philo, char **argv, t_control *control)
 		philo[i].writing_lock = &control->writing_lock;
 		philo[i].eating_lock = &control->eating_lock;
 		philo[i].l_fork = &forks[i];
-		philo[i].r_fork = &forks[i + 1 % ft_atoi(argv[1])];
+		philo[i].r_fork = &forks[(i + 1) % ft_atoi(argv[1])];
 		i++;
 	}
 }
