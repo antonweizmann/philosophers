@@ -6,7 +6,7 @@
 /*   By: antonweizmann <antonweizmann@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 11:08:51 by antonweizma       #+#    #+#             */
-/*   Updated: 2024/05/03 12:53:26 by antonweizma      ###   ########.fr       */
+/*   Updated: 2024/05/04 08:59:03 by antonweizma      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,18 @@ unsigned int			get_time(void);
 void					ft_putphilo_msg(char *s, t_philo *philo);
 
 // Mutex
-void					lock_mutex(pthread_mutex_t *mutex, t_philo *philo);
-void					unlock_mutex(pthread_mutex_t *mutex, t_philo *philo);
+void					lock_mutex(pthread_mutex_t *mutex, t_philo *philo, t_control *control);
+void					unlock_mutex(pthread_mutex_t *mutex, t_philo *philo, t_control *control);
 
 // Init
 void					init_philo (t_philo *philo, char **argv, t_control *control);
 void					init_control(t_control *control, t_philo *philo);
 int						check_input(char **argv, int argc, t_control *control);
+
+
+// Philosopher
+void					philosopher(void *param);
+
+// Monitor
+void					monitor_philo(t_control *control);
 #endif

@@ -6,7 +6,7 @@
 /*   By: antonweizmann <antonweizmann@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 11:16:00 by antonweizma       #+#    #+#             */
-/*   Updated: 2024/05/03 12:56:03 by antonweizma      ###   ########.fr       */
+/*   Updated: 2024/05/04 09:03:52 by antonweizma      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,12 +67,12 @@ void	ft_putstr_fd(char *s, int fd)
 
 void	ft_putphilo_msg(char *s, t_philo *philo)
 {
-	lock_mutex(philo->writing_lock, philo);
-	ft_putnbr_fd(get_time(), 1);
+	lock_mutex(philo->writing_lock, philo, NULL);
+	ft_putnbr_fd(get_time() - philo->start_time, 1);
 	ft_putstr_fd(" ", 1);
 	ft_putnbr_fd(philo->id, 1);
 	ft_putstr_fd(" ", 1);
 	ft_putstr_fd(s, 1);
 	ft_putstr_fd("\n", 1);
-	unlock_mutex(philo->writing_lock, philo);
+	unlock_mutex(philo->writing_lock, philo, NULL);
 }
