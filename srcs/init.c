@@ -6,7 +6,7 @@
 /*   By: antonweizmann <antonweizmann@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 09:41:51 by antonweizma       #+#    #+#             */
-/*   Updated: 2024/05/04 09:53:08 by antonweizma      ###   ########.fr       */
+/*   Updated: 2024/05/04 13:25:36 by antonweizma      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,16 @@ void	init_forks(pthread_mutex_t *forks, int num_philo)
 
 	i = 0;
 	while (i < num_philo)
-		pthread_mutex_init(&(forks[i++]), NULL);
+	{
+		pthread_mutex_init(&(forks[i]), NULL);
+		i++;
+	}
 }
 
 void	init_philo (t_philo *philo, char **argv, t_control *control)
 {
-	int	i;
-	pthread_mutex_t	forks[MAX_PHILO];
+	int				i;
+	pthread_mutex_t	forks[ft_atoi(argv[1])];
 
 	i = 0;
 	init_forks(forks, ft_atoi(argv[1]));
@@ -40,17 +43,14 @@ void	init_philo (t_philo *philo, char **argv, t_control *control)
 		philo[i].total_eaten_meals = 0;
 		philo[i].time_last_meal = get_time();
 		philo[i].start_time = get_time();
-		philo[i].dead = &(control->dead);
+		philo[i].dead = &control->dead;
 		philo[i].error = &control->error;
-		philo[i].error_lock = &(control->error_lock);
-		philo[i].dead_lock = &(control->dead_lock);
-		philo[i].writing_lock = &(control->writing_lock);
-		philo[i].eating_lock = &(control->eating_lock);
-		philo[i].l_fork = forks[i];
-		if (i + 1 == 1)
-			philo[i].r_fork = forks[ft_atoi(argv[1]) - 1];
-		else
-			philo[i].r_fork = forks[i - 1];
+		philo[i].error_lock = &control->error_lock;
+		philo[i].dead_lock = &control->dead_lock;
+		philo[i].writing_lock = &control->writing_lock;
+		philo[i].eating_lock = &control->eating_lock;
+		philo[i].l_fork = &forks[i];
+		philo[i].r_fork = &forks[i + 1 % ft_atoi(argv[1])];
 		i++;
 	}
 }
@@ -60,10 +60,10 @@ void	init_control(t_control *control, t_philo *philo)
 	control->dead = 0;
 	control->error = 0;
 	control->philos = philo;
-	pthread_mutex_init(&(control->error_lock), NULL);
-	pthread_mutex_init(&(control->dead_lock), NULL);
-	pthread_mutex_init(&(control->writing_lock), NULL);
-	pthread_mutex_init(&(control->eating_lock), NULL);
+	pthread_mutex_init(&control->error_lock, NULL);
+	pthread_mutex_init(&control->dead_lock, NULL);
+	pthread_mutex_init(&control->writing_lock, NULL);
+	pthread_mutex_init(&control->eating_lock, NULL);
 }
 
 int	check_chars(char *str)
@@ -81,14 +81,6 @@ int	check_input(char **argv, int argc)
 {
 	if (argc == 5 || argc == 6)
 	{
-		if (ft_atoi(argv[1]) == 1)
-		{
-			ft_putstr_fd("0 1 has taken a fork\n", 1);
-			usleep(ft_atoi(argv[2]));
-			ft_putnbr_fd(ft_atoi(argv[2]), 1);
-			ft_putstr_fd(" 1 died\n", 1);
-			return (0);
-		}
 		if (ft_atoi(argv[1]) > MAX_PHILO || ft_atoi(argv[1]) <= 0 || check_chars(argv[1]) == 1)
 			return (ft_putstr_fd("Invalid Number Of Philosophers\n", 2), 1);
 		if (ft_atoi(argv[2]) <= 0 || check_chars(argv[2]) == 1)

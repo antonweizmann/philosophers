@@ -6,7 +6,7 @@
 /*   By: antonweizmann <antonweizmann@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 12:03:18 by antonweizma       #+#    #+#             */
-/*   Updated: 2024/05/04 10:08:58 by antonweizma      ###   ########.fr       */
+/*   Updated: 2024/05/04 12:29:06 by antonweizma      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	is_dead(t_control *control)
 	while (i < control->num_philo)
 	{
 		lock_mutex(&control->eating_lock, NULL, control);
-		if (get_time() - control->philos[i].time_last_meal >= control->philos[i].time_to_die && control->philos[i].eating == 0)
+		if (get_time() - control->philos[i].time_last_meal >= control->philos[i].time_to_die  && control->philos[i].eating == 0)
 			return (unlock_mutex(&control->eating_lock, NULL, control), ft_putphilo_msg("is dead", &control->philos[i]), 1);
 		unlock_mutex(&control->eating_lock, NULL, control);
 		i++;
@@ -61,8 +61,7 @@ void	*monitor_philo(void *param)
 {
 	t_control	*control;
 
-	control = param;
-	usleep(500);
+	control = (t_control *)param;
 	while (1)
 	{
 		if (is_dead(control) || is_error(control))

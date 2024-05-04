@@ -6,7 +6,7 @@
 /*   By: antonweizmann <antonweizmann@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 12:49:50 by antonweizma       #+#    #+#             */
-/*   Updated: 2024/05/04 09:51:59 by antonweizma      ###   ########.fr       */
+/*   Updated: 2024/05/04 12:19:34 by antonweizma      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,15 @@ unsigned int	get_time(void)
 	gettimeofday(&time, NULL);
 	return(time.tv_sec * 1000 + time.tv_usec / 1000);
 }
+int	ms_sleep(unsigned int ms)
+{
+	unsigned int	start;
 
+	start = get_time();
+	while ((get_time() - start) < ms)
+		usleep(500);
+	return (0);
+}
 void	lock_mutex(pthread_mutex_t *mutex, t_philo *philo, t_control *control)
 {
 	if (!philo)

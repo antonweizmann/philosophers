@@ -6,7 +6,7 @@
 /*   By: antonweizmann <antonweizmann@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 11:08:51 by antonweizma       #+#    #+#             */
-/*   Updated: 2024/05/04 10:04:28 by antonweizma      ###   ########.fr       */
+/*   Updated: 2024/05/04 12:34:49 by antonweizma      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ typedef struct s_philo
 	unsigned int		start_time;
 	int					*dead;
 	int					*error;
-	pthread_mutex_t		r_fork;
-	pthread_mutex_t		l_fork;
+	pthread_mutex_t		*r_fork;
+	pthread_mutex_t		*l_fork;
 	pthread_mutex_t		*error_lock;
 	pthread_mutex_t		*dead_lock;
 	pthread_mutex_t		*eating_lock;
@@ -63,7 +63,7 @@ unsigned int			get_time(void);
 void					ft_putphilo_msg(char *s, t_philo *philo);
 void					clean_up(char *str, t_control *control);
 void					ft_putnbr_fd(int n, int fd);
-
+int						ms_sleep(unsigned int ms);
 // Mutex
 void					lock_mutex(pthread_mutex_t *mutex, t_philo *philo, t_control *control);
 void					unlock_mutex(pthread_mutex_t *mutex, t_philo *philo, t_control *control);

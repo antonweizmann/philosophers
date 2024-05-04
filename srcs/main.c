@@ -6,7 +6,7 @@
 /*   By: antonweizmann <antonweizmann@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 11:08:47 by antonweizma       #+#    #+#             */
-/*   Updated: 2024/05/04 09:55:37 by antonweizma      ###   ########.fr       */
+/*   Updated: 2024/05/04 12:18:53 by antonweizma      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,14 @@ int	main(int argc, char **argv)
 	t_control	control;
 	t_philo		philo[MAX_PHILO];
 
+	if (ft_atoi(argv[1]) == 1)
+	{
+		ft_putstr_fd("0 1 has taken a fork\n", 1);
+		ms_sleep(ft_atoi(argv[2]));
+		ft_putnbr_fd(ft_atoi(argv[2]), 1);
+		ft_putstr_fd(" 1 died\n", 1);
+		return (0);
+	}
 	if (check_input(argv, argc) == 1)
 		return (1);
 	init_control(&control, philo);
