@@ -6,7 +6,7 @@
 /*   By: antonweizmann <antonweizmann@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 11:08:51 by antonweizma       #+#    #+#             */
-/*   Updated: 2024/05/04 08:59:03 by antonweizma      ###   ########.fr       */
+/*   Updated: 2024/05/04 10:04:28 by antonweizma      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct s_philo
 	int					*error;
 	pthread_mutex_t		r_fork;
 	pthread_mutex_t		l_fork;
+	pthread_mutex_t		*error_lock;
 	pthread_mutex_t		*dead_lock;
 	pthread_mutex_t		*eating_lock;
 	pthread_mutex_t		*writing_lock;
@@ -46,8 +47,10 @@ typedef struct s_philo
 typedef struct s_control
 {
 	t_philo				*philos;
+	int					num_philo;
 	int					dead;
 	int					error;
+	pthread_mutex_t		error_lock;
 	pthread_mutex_t		dead_lock;
 	pthread_mutex_t		eating_lock;
 	pthread_mutex_t		writing_lock;
@@ -58,6 +61,8 @@ int						ft_atoi(const char *str);
 void					ft_putstr_fd(char *s, int fd);
 unsigned int			get_time(void);
 void					ft_putphilo_msg(char *s, t_philo *philo);
+void					clean_up(char *str, t_control *control);
+void					ft_putnbr_fd(int n, int fd);
 
 // Mutex
 void					lock_mutex(pthread_mutex_t *mutex, t_philo *philo, t_control *control);
@@ -66,12 +71,13 @@ void					unlock_mutex(pthread_mutex_t *mutex, t_philo *philo, t_control *control
 // Init
 void					init_philo (t_philo *philo, char **argv, t_control *control);
 void					init_control(t_control *control, t_philo *philo);
-int						check_input(char **argv, int argc, t_control *control);
+int						check_input(char **argv, int argc);
 
 
 // Philosopher
-void					philosopher(void *param);
+void					*philosopher(void *param);
+int						dead_check(t_philo *philo);
 
 // Monitor
-void					monitor_philo(t_control *control);
+void					*monitor_philo(void *param);
 #endif

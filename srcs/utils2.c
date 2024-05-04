@@ -6,7 +6,7 @@
 /*   By: antonweizmann <antonweizmann@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 12:49:50 by antonweizma       #+#    #+#             */
-/*   Updated: 2024/05/04 08:46:35 by antonweizma      ###   ########.fr       */
+/*   Updated: 2024/05/04 09:51:59 by antonweizma      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,19 +23,50 @@ unsigned int	get_time(void)
 void	lock_mutex(pthread_mutex_t *mutex, t_philo *philo, t_control *control)
 {
 	if (!philo)
+	{
 		if (pthread_mutex_lock(mutex))
+		{
+			pthread_mutex_lock(&control->error_lock);
 			control->error = 1;
+			pthread_mutex_unlock(&control->error_lock);
+		}
+	}
 	else
+	{
 		if (pthread_mutex_lock(mutex))
+		{
+			pthread_mutex_lock(philo->error_lock);
 			*philo->error = 1;
+			pthread_mutex_unlock(philo->error_lock);
+		}
+	}
 }
 
 void	unlock_mutex(pthread_mutex_t *mutex, t_philo *philo, t_control *control)
 {
 	if (!philo)
+	{
 		if (pthread_mutex_unlock(mutex))
 			control->error = 1;
+	}
 	else
+	{
 		if (pthread_mutex_unlock(mutex))
-		*philo->error = 1;
+			*philo->error = 1;
+	}
+}
+
+void	clean_up(char *str, t_control *control)
+{
+	int	i;
+
+	i = 0;
+	ft_putstr_fd(str, 2);
+	pthread_mutex_destroy(&control->writing_lock);
+	pthread_mutex_destroy(&control->eating_lock);
+	pthread_mutex_destroy(&control->error_lock);
+	pthread_mutex_destroy(&control->dead_lock);
+	while (i < control->num_philo)
+		pthread_mutex_destroy(&control->philos[i++].r_fork);
+	exit(1);
 }

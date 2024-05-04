@@ -6,7 +6,7 @@
 /*   By: antonweizmann <antonweizmann@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 11:16:00 by antonweizma       #+#    #+#             */
-/*   Updated: 2024/05/04 09:03:52 by antonweizma      ###   ########.fr       */
+/*   Updated: 2024/05/04 10:03:52 by antonweizma      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,11 @@ int	ft_atoi(const char *str)
 	return (result);
 }
 
+void	ft_putchar_fd(char c, int fd)
+{
+	write (fd, &c, sizeof(c));
+}
+
 void	ft_putnbr_fd(int n, int fd)
 {
 	long	nb;
@@ -67,6 +72,8 @@ void	ft_putstr_fd(char *s, int fd)
 
 void	ft_putphilo_msg(char *s, t_philo *philo)
 {
+	if (dead_check(philo))
+		return ;
 	lock_mutex(philo->writing_lock, philo, NULL);
 	ft_putnbr_fd(get_time() - philo->start_time, 1);
 	ft_putstr_fd(" ", 1);

@@ -6,11 +6,20 @@
 /*   By: antonweizmann <antonweizmann@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 09:41:51 by antonweizma       #+#    #+#             */
-/*   Updated: 2024/05/03 13:22:55 by antonweizma      ###   ########.fr       */
+/*   Updated: 2024/05/04 09:53:08 by antonweizma      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	init_forks(pthread_mutex_t *forks, int num_philo)
+{
+	int	i;
+
+	i = 0;
+	while (i < num_philo)
+		pthread_mutex_init(&(forks[i++]), NULL);
+}
 
 void	init_philo (t_philo *philo, char **argv, t_control *control)
 {
@@ -22,17 +31,18 @@ void	init_philo (t_philo *philo, char **argv, t_control *control)
 	while (i < ft_atoi(argv[1]))
 	{
 		philo[i].id = i + 1;
-		philo[i].time_to_die = argv[2];
-		philo[i].time_to_eat = argv[3];
-		philo[i].time_to_sleep = argv[4];
+		philo[i].time_to_die = ft_atoi(argv[2]);
+		philo[i].time_to_eat = ft_atoi(argv[3]);
+		philo[i].time_to_sleep = ft_atoi(argv[4]);
 		if (argv[5])
-			philo[i].total_meals = argv[5];
+			philo[i].total_meals = ft_atoi(argv[5]);
 		philo[i].eating = 0;
 		philo[i].total_eaten_meals = 0;
 		philo[i].time_last_meal = get_time();
 		philo[i].start_time = get_time();
 		philo[i].dead = &(control->dead);
 		philo[i].error = &control->error;
+		philo[i].error_lock = &(control->error_lock);
 		philo[i].dead_lock = &(control->dead_lock);
 		philo[i].writing_lock = &(control->writing_lock);
 		philo[i].eating_lock = &(control->eating_lock);
@@ -50,18 +60,10 @@ void	init_control(t_control *control, t_philo *philo)
 	control->dead = 0;
 	control->error = 0;
 	control->philos = philo;
+	pthread_mutex_init(&(control->error_lock), NULL);
 	pthread_mutex_init(&(control->dead_lock), NULL);
 	pthread_mutex_init(&(control->writing_lock), NULL);
 	pthread_mutex_init(&(control->eating_lock), NULL);
-}
-
-void	init_forks(pthread_mutex_t *forks, int num_philo)
-{
-	int	i;
-
-	i = 0;
-	while (i < num_philo)
-		pthread_mutex_init(&(forks[i++]), NULL);
 }
 
 int	check_chars(char *str)
@@ -75,15 +77,16 @@ int	check_chars(char *str)
 	return (0);
 }
 
-int	check_input(char **argv, int argc, t_control *control)
+int	check_input(char **argv, int argc)
 {
 	if (argc == 5 || argc == 6)
 	{
 		if (ft_atoi(argv[1]) == 1)
 		{
-			printf("0 1 has taken a fork\n");
-			sleep_ms(ft_atoi(argv[2]));
-			printf("%i 1 died\n", ft_atoi(argv[2]));
+			ft_putstr_fd("0 1 has taken a fork\n", 1);
+			usleep(ft_atoi(argv[2]));
+			ft_putnbr_fd(ft_atoi(argv[2]), 1);
+			ft_putstr_fd(" 1 died\n", 1);
 			return (0);
 		}
 		if (ft_atoi(argv[1]) > MAX_PHILO || ft_atoi(argv[1]) <= 0 || check_chars(argv[1]) == 1)
@@ -97,6 +100,7 @@ int	check_input(char **argv, int argc, t_control *control)
 		if (argv[5] && (ft_atoi(argv[5]) < 0 || check_chars(argv[5]) == 1))
 			return (ft_putstr_fd("Invalid Number Of Meals\n", 2), 1);
 	}
-	return (ft_putstr_fd("Invalid Number Of Arguments\n", 2), 1);
-
+	else
+		return (ft_putstr_fd("Invalid Number Of Arguments\n", 2), 1);
+	return (0);
 }
