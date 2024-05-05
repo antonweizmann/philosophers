@@ -6,7 +6,7 @@
 /*   By: antonweizmann <antonweizmann@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 12:03:18 by antonweizma       #+#    #+#             */
-/*   Updated: 2024/05/04 21:56:17 by antonweizma      ###   ########.fr       */
+/*   Updated: 2024/05/05 01:29:48 by antonweizma      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	*monitor_philo(void *param)
 	control = (t_control *)param;
 	while (1)
 	{
-		if (is_dead(control) || eaten_enough(control))
+		if (is_dead(control) || eaten_enough(control) || control->error == 1)
 		{
 			lock_mutex(&control->dead_lock, NULL, control);
 			control->dead = 1;
