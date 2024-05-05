@@ -6,7 +6,7 @@
 /*   By: antonweizmann <antonweizmann@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 11:08:47 by antonweizma       #+#    #+#             */
-/*   Updated: 2024/05/04 21:03:20 by antonweizma      ###   ########.fr       */
+/*   Updated: 2024/05/05 15:25:36 by antonweizma      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	main(int argc, char **argv)
 	}
 	if (check_input(argv, argc) == 1)
 		return (1);
-	init_control(&control, philo, eating_locks);
+	init_control(&control, philo, eating_locks, ft_atoi(argv[1]));
 	init_philo(philo, argv, &control);
 	start_threads(&control, ft_atoi(argv[1]));
 	// clean_up(NULL, &control);

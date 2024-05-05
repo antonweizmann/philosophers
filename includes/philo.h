@@ -6,7 +6,7 @@
 /*   By: antonweizmann <antonweizmann@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 11:08:51 by antonweizma       #+#    #+#             */
-/*   Updated: 2024/05/04 21:22:12 by antonweizma      ###   ########.fr       */
+/*   Updated: 2024/05/05 15:22:40 by antonweizma      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void					unlock_mutex(pthread_mutex_t *mutex, t_philo *philo, t_control *control
 
 // Init
 void					init_philo (t_philo *philo, char **argv, t_control *control);
-void					init_control(t_control *control, t_philo *philo, pthread_mutex_t *eating_locks);
+void					init_control(t_control *control, t_philo *philo, pthread_mutex_t *eating_locks, int num_philo);
 int						check_input(char **argv, int argc);
 
 

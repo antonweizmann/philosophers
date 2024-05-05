@@ -6,7 +6,7 @@
 /*   By: antonweizmann <antonweizmann@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 09:41:51 by antonweizma       #+#    #+#             */
-/*   Updated: 2024/05/05 01:31:20 by antonweizma      ###   ########.fr       */
+/*   Updated: 2024/05/05 15:30:13 by antonweizma      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	init_forks(pthread_mutex_t *forks, int num_philo)
 	i = 0;
 	while (i < num_philo)
 	{
-		pthread_mutex_init(&(forks[i]), NULL);
+		pthread_mutex_init(&forks[i], NULL);
 		i++;
 	}
 }
@@ -31,7 +31,6 @@ void	init_philo (t_philo *philo, char **argv, t_control *control)
 
 	i = 0;
 	init_forks(forks, ft_atoi(argv[1]));
-	init_forks(control->eating_locks, ft_atoi(argv[1]));
 	while (i < ft_atoi(argv[1]))
 	{
 		philo[i].id = i + 1;
@@ -58,12 +57,14 @@ void	init_philo (t_philo *philo, char **argv, t_control *control)
 	}
 }
 
-void	init_control(t_control *control, t_philo *philo, pthread_mutex_t *eating_locks)
+void	init_control(t_control *control, t_philo *philo, pthread_mutex_t *eating_locks, int num_philo)
 {
 	control->dead = 0;
 	control->error = 0;
 	control->philos = philo;
 	control->eating_locks = eating_locks;
+	control->num_philo = num_philo;
+	init_forks(control->eating_locks, num_philo);
 	pthread_mutex_init(&control->error_lock, NULL);
 	pthread_mutex_init(&control->dead_lock, NULL);
 	pthread_mutex_init(&control->writing_lock, NULL);
