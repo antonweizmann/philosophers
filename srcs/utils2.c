@@ -6,7 +6,7 @@
 /*   By: antonweizmann <antonweizmann@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 12:49:50 by antonweizma       #+#    #+#             */
-/*   Updated: 2024/05/05 15:25:02 by antonweizma      ###   ########.fr       */
+/*   Updated: 2024/05/05 19:18:14 by antonweizma      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,14 +56,18 @@ void	unlock_mutex(pthread_mutex_t *mutex, t_philo *philo, t_control *control)
 	{
 		if (pthread_mutex_unlock(mutex))
 		{
+			pthread_mutex_lock(&control->error_lock);
 			control->error = 1;
+			pthread_mutex_unlock(&control->error_lock);
 		}
 	}
 	else
 	{
 		if (pthread_mutex_unlock(mutex))
 		{
+			pthread_mutex_lock(philo->error_lock);
 			*philo->error = 1;
+			pthread_mutex_unlock(philo->error_lock);
 		}
 	}
 }

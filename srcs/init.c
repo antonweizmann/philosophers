@@ -6,7 +6,7 @@
 /*   By: antonweizmann <antonweizmann@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 09:41:51 by antonweizma       #+#    #+#             */
-/*   Updated: 2024/05/05 15:30:13 by antonweizma      ###   ########.fr       */
+/*   Updated: 2024/05/05 19:22:57 by antonweizma      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	init_forks(pthread_mutex_t *forks, int num_philo)
 void	init_philo (t_philo *philo, char **argv, t_control *control)
 {
 	int				i;
-	pthread_mutex_t	forks[MAX_PHILO];
+	pthread_mutex_t	forks[MAX_PHILO + 3];
 
 	i = 0;
 	init_forks(forks, ft_atoi(argv[1]));
@@ -85,7 +85,7 @@ int	check_input(char **argv, int argc)
 {
 	if (argc == 5 || argc == 6)
 	{
-		if (ft_atoi(argv[1]) > MAX_PHILO || ft_atoi(argv[1]) <= 0 || check_chars(argv[1]) == 1)
+		if (ft_atoi(argv[1]) > 200 || ft_atoi(argv[1]) <= 0 || check_chars(argv[1]) == 1)
 			return (ft_putstr_fd("Invalid Number Of Philosophers\n", 2), 1);
 		if (ft_atoi(argv[2]) <= 0 || check_chars(argv[2]) == 1)
 			return (ft_putstr_fd("Invalid Time To Die\n", 2), 1);
