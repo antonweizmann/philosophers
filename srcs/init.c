@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antonweizmann <antonweizmann@student.42    +#+  +:+       +#+        */
+/*   By: aweizman <aweizman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 09:41:51 by antonweizma       #+#    #+#             */
-/*   Updated: 2024/05/05 19:22:57 by antonweizma      ###   ########.fr       */
+/*   Updated: 2024/05/06 13:14:25 by aweizman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ void	init_philo (t_philo *philo, char **argv, t_control *control)
 	pthread_mutex_t	forks[MAX_PHILO + 3];
 
 	i = 0;
-	init_forks(forks, ft_atoi(argv[1]));
+	// init_forks(forks, ft_atoi(argv[1]));
+	pthread_mutex_init(&forks[0], NULL);
 	while (i < ft_atoi(argv[1]))
 	{
 		philo[i].id = i + 1;
@@ -51,6 +52,9 @@ void	init_philo (t_philo *philo, char **argv, t_control *control)
 		philo[i].dead_lock = &control->dead_lock;
 		philo[i].writing_lock = &control->writing_lock;
 		philo[i].eating_lock = &control->eating_locks[i];
+		pthread_mutex_init(philo[i].eating_lock, NULL);
+		if (i + 1 < ft_atoi(argv[1]))
+			pthread_mutex_init(&forks[i + 1], NULL);
 		philo[i].l_fork = &forks[i];
 		philo[i].r_fork = &forks[(i + 1) % ft_atoi(argv[1])];
 		i++;
@@ -64,7 +68,6 @@ void	init_control(t_control *control, t_philo *philo, pthread_mutex_t *eating_lo
 	control->philos = philo;
 	control->eating_locks = eating_locks;
 	control->num_philo = num_philo;
-	init_forks(control->eating_locks, num_philo);
 	pthread_mutex_init(&control->error_lock, NULL);
 	pthread_mutex_init(&control->dead_lock, NULL);
 	pthread_mutex_init(&control->writing_lock, NULL);

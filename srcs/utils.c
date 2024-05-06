@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antonweizmann <antonweizmann@student.42    +#+  +:+       +#+        */
+/*   By: aweizman <aweizman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 11:16:00 by antonweizma       #+#    #+#             */
-/*   Updated: 2024/05/05 01:29:03 by antonweizma      ###   ########.fr       */
+/*   Updated: 2024/05/06 13:12:01 by aweizman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   monitor_philo.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antonweizmann <antonweizmann@student.42    +#+  +:+       +#+        */
+/*   By: aweizman <aweizman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 12:03:18 by antonweizma       #+#    #+#             */
-/*   Updated: 2024/05/05 19:32:01 by antonweizma      ###   ########.fr       */
+/*   Updated: 2024/05/06 12:38:58 by aweizman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	*monitor_philo(void *param)
 	control = (t_control *)param;
 	while (1)
 	{
-		if (is_dead(control) || eaten_enough(control))
+		if (is_dead(control) || eaten_enough(control) || is_error(control))
 		{
 			lock_mutex(&control->dead_lock, NULL, control);
 			control->dead = 1;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosopher.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antonweizmann <antonweizmann@student.42    +#+  +:+       +#+        */
+/*   By: aweizman <aweizman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 12:04:32 by antonweizma       #+#    #+#             */
-/*   Updated: 2024/05/05 01:28:43 by antonweizma      ###   ########.fr       */
+/*   Updated: 2024/05/06 13:10:52 by aweizman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

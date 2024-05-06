@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antonweizmann <antonweizmann@student.42    +#+  +:+       +#+        */
+/*   By: aweizman <aweizman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 11:08:51 by antonweizma       #+#    #+#             */
-/*   Updated: 2024/05/05 19:32:58 by antonweizma      ###   ########.fr       */
+/*   Updated: 2024/05/06 13:14:17 by aweizman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

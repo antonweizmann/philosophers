@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antonweizmann <antonweizmann@student.42    +#+  +:+       +#+        */
+/*   By: aweizman <aweizman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 12:49:50 by antonweizma       #+#    #+#             */
-/*   Updated: 2024/05/05 19:18:14 by antonweizma      ###   ########.fr       */
+/*   Updated: 2024/05/06 13:09:05 by aweizman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,14 @@ void	lock_mutex(pthread_mutex_t *mutex, t_philo *philo, t_control *control)
 		if (pthread_mutex_lock(mutex))
 		{
 			pthread_mutex_lock(philo->error_lock);
+			ft_putphilo_msg("error", philo);
 			*philo->error = 1;
 			pthread_mutex_unlock(philo->error_lock);
 		}
 	}
+	// (void)philo;
+	// (void)control;
+	// pthread_mutex_lock(mutex);
 }
 
 void	unlock_mutex(pthread_mutex_t *mutex, t_philo *philo, t_control *control)
@@ -70,6 +74,9 @@ void	unlock_mutex(pthread_mutex_t *mutex, t_philo *philo, t_control *control)
 			pthread_mutex_unlock(philo->error_lock);
 		}
 	}
+	// (void)philo;
+	// (void)control;
+	// pthread_mutex_unlock(mutex);
 }
 
 void	clean_up(char *str, t_control *control)
