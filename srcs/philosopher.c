@@ -6,7 +6,7 @@
 /*   By: aweizman <aweizman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 12:04:32 by antonweizma       #+#    #+#             */
-/*   Updated: 2024/05/06 13:10:52 by aweizman         ###   ########.fr       */
+/*   Updated: 2024/05/06 15:49:46 by aweizman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ void	philo_eat(t_philo *philo)
 	ft_putphilo_msg("has taken a fork", philo);
 	if (dead_check(philo))
 		return (unlock_mutex(philo->r_fork, philo, NULL), unlock_mutex(philo->l_fork, philo, NULL));
-	ft_putphilo_msg("is eating", philo);
 	philo->eating = 1;
+	ft_putphilo_msg("is eating", philo);
 	lock_mutex(philo->eating_lock, philo, NULL);
 	philo->time_last_meal = get_time();
 	philo->total_eaten_meals++;

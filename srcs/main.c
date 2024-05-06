@@ -6,7 +6,7 @@
 /*   By: aweizman <aweizman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 11:08:47 by antonweizma       #+#    #+#             */
-/*   Updated: 2024/05/06 12:40:34 by aweizman         ###   ########.fr       */
+/*   Updated: 2024/05/06 15:38:58 by aweizman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@ void	start_threads(t_control *control, int num_philo)
 	int			i;
 	pthread_t	monitor;
 
-	control->num_philo = num_philo;
 	if (pthread_create(&monitor, NULL, &monitor_philo, control) != 0)
 		clean_up("Error whilst creating thread", control);
 	i = 0;
 	while (i < num_philo)
 	{
+		usleep(10);
 		if (pthread_create(&control->philos[i].thread, NULL, philosopher, &control->philos[i]) != 0)
 			clean_up("Error whilst creating thread", control);
 		i++;

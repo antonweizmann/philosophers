@@ -6,7 +6,7 @@
 /*   By: aweizman <aweizman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 09:41:51 by antonweizma       #+#    #+#             */
-/*   Updated: 2024/05/06 13:14:25 by aweizman         ###   ########.fr       */
+/*   Updated: 2024/05/06 15:34:33 by aweizman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,12 @@ void	init_forks(pthread_mutex_t *forks, int num_philo)
 void	init_philo (t_philo *philo, char **argv, t_control *control)
 {
 	int				i;
-	pthread_mutex_t	forks[MAX_PHILO + 3];
+	pthread_mutex_t	*forks;
 
+	forks = malloc(sizeof(pthread_mutex_t) * MAX_PHILO);
 	i = 0;
-	// init_forks(forks, ft_atoi(argv[1]));
-	pthread_mutex_init(&forks[0], NULL);
+	init_forks(forks, ft_atoi(argv[1]));
+	// pthread_mutex_init(&forks[0], NULL);
 	while (i < ft_atoi(argv[1]))
 	{
 		philo[i].id = i + 1;
@@ -53,8 +54,8 @@ void	init_philo (t_philo *philo, char **argv, t_control *control)
 		philo[i].writing_lock = &control->writing_lock;
 		philo[i].eating_lock = &control->eating_locks[i];
 		pthread_mutex_init(philo[i].eating_lock, NULL);
-		if (i + 1 < ft_atoi(argv[1]))
-			pthread_mutex_init(&forks[i + 1], NULL);
+		// if (i + 1 < ft_atoi(argv[1]))
+		// 	pthread_mutex_init(&forks[i + 1], NULL);
 		philo[i].l_fork = &forks[i];
 		philo[i].r_fork = &forks[(i + 1) % ft_atoi(argv[1])];
 		i++;

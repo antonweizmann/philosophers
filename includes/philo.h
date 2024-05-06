@@ -6,7 +6,7 @@
 /*   By: aweizman <aweizman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 11:08:51 by antonweizma       #+#    #+#             */
-/*   Updated: 2024/05/06 13:14:17 by aweizman         ###   ########.fr       */
+/*   Updated: 2024/05/06 15:11:01 by aweizman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <unistd.h>
 # include <stdio.h>
 
-# define MAX_PHILO 200
+# define MAX_PHILO 220
 
 typedef struct s_philo
 {
