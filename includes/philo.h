@@ -6,7 +6,7 @@
 /*   By: aweizman <aweizman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 11:08:51 by antonweizma       #+#    #+#             */
-/*   Updated: 2024/05/06 15:11:01 by aweizman         ###   ########.fr       */
+/*   Updated: 2024/05/06 16:26:32 by aweizman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef struct s_control
 	int					num_philo;
 	int					dead;
 	int					error;
+	pthread_mutex_t		*forks;
 	pthread_mutex_t		error_lock;
 	pthread_mutex_t		dead_lock;
 	pthread_mutex_t		*eating_locks;
@@ -61,7 +62,7 @@ int						ft_atoi(const char *str);
 void					ft_putstr_fd(char *s, int fd);
 unsigned int			get_time(void);
 void					ft_putphilo_msg(char *s, t_philo *philo);
-void					clean_up(char *str, t_control *control);
+int						clean_up(char *str, t_control *control);
 void					ft_putnbr_fd(int n, int fd);
 int						ms_sleep(unsigned int ms);
 // Mutex

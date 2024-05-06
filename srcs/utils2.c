@@ -6,7 +6,7 @@
 /*   By: aweizman <aweizman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 12:49:50 by antonweizma       #+#    #+#             */
-/*   Updated: 2024/05/06 15:52:57 by aweizman         ###   ########.fr       */
+/*   Updated: 2024/05/06 16:27:39 by aweizman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	unlock_mutex(pthread_mutex_t *mutex, t_philo *philo, t_control *control)
 	pthread_mutex_unlock(mutex);
 }
 
-void	clean_up(char *str, t_control *control)
+int	clean_up(char *str, t_control *control)
 {
 	int	i;
 
@@ -101,5 +101,6 @@ void	clean_up(char *str, t_control *control)
 		pthread_mutex_destroy(&control->eating_locks[i]);
 		i++;
 	}
-	exit(1);
+	free (control->forks);
+	return (1);
 }

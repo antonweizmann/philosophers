@@ -6,7 +6,7 @@
 /*   By: aweizman <aweizman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 09:41:51 by antonweizma       #+#    #+#             */
-/*   Updated: 2024/05/06 15:34:33 by aweizman         ###   ########.fr       */
+/*   Updated: 2024/05/06 16:26:50 by aweizman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	init_philo (t_philo *philo, char **argv, t_control *control)
 	forks = malloc(sizeof(pthread_mutex_t) * MAX_PHILO);
 	i = 0;
 	init_forks(forks, ft_atoi(argv[1]));
+	control->forks = forks;
 	// pthread_mutex_init(&forks[0], NULL);
 	while (i < ft_atoi(argv[1]))
 	{
