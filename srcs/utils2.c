@@ -6,7 +6,7 @@
 /*   By: aweizman <aweizman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 12:49:50 by antonweizma       #+#    #+#             */
-/*   Updated: 2024/05/06 16:27:39 by aweizman         ###   ########.fr       */
+/*   Updated: 2024/05/06 16:46:19 by aweizman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,53 +34,46 @@ int	ms_sleep(unsigned int ms)
 
 void	lock_mutex(pthread_mutex_t *mutex, t_philo *philo, t_control *control)
 {
-	// if (!philo)
-	// {
-	// 	if (pthread_mutex_lock(mutex))
-	// 	{
-	// 		pthread_mutex_lock(&control->error_lock);
-	// 		control->error = 1;
-	// 		pthread_mutex_unlock(&control->error_lock);
-	// 	}
-	// }
-	// else
-	// {
-	// 	if (pthread_mutex_lock(mutex))
-	// 	{
-	// 		pthread_mutex_lock(philo->error_lock);
-	// 		// ft_putphilo_msg("error", philo);
-	// 		*philo->error = 1;
-	// 		pthread_mutex_unlock(philo->error_lock);
-	// 	}
-	// }
-	(void)philo;
-	(void)control;
-	pthread_mutex_lock(mutex);
+	if (!philo)
+	{
+		if (pthread_mutex_lock(mutex))
+		{
+			pthread_mutex_lock(&control->error_lock);
+			control->error = 1;
+			pthread_mutex_unlock(&control->error_lock);
+		}
+	}
+	else
+	{
+		if (pthread_mutex_lock(mutex))
+		{
+			pthread_mutex_lock(philo->error_lock);
+			*philo->error = 1;
+			pthread_mutex_unlock(philo->error_lock);
+		}
+	}
 }
 
 void	unlock_mutex(pthread_mutex_t *mutex, t_philo *philo, t_control *control)
 {
-	// if (!philo)
-	// {
-	// 	if (pthread_mutex_unlock(mutex))
-	// 	{
-	// 		pthread_mutex_lock(&control->error_lock);
-	// 		control->error = 1;
-	// 		pthread_mutex_unlock(&control->error_lock);
-	// 	}
-	// }
-	// else
-	// {
-	// 	if (pthread_mutex_unlock(mutex))
-	// 	{
-	// 		pthread_mutex_lock(philo->error_lock);
-	// 		*philo->error = 1;
-	// 		pthread_mutex_unlock(philo->error_lock);
-	// 	}
-	// }
-	(void)philo;
-	(void)control;
-	pthread_mutex_unlock(mutex);
+	if (!philo)
+	{
+		if (pthread_mutex_unlock(mutex))
+		{
+			pthread_mutex_lock(&control->error_lock);
+			control->error = 1;
+			pthread_mutex_unlock(&control->error_lock);
+		}
+	}
+	else
+	{
+		if (pthread_mutex_unlock(mutex))
+		{
+			pthread_mutex_lock(philo->error_lock);
+			*philo->error = 1;
+			pthread_mutex_unlock(philo->error_lock);
+		}
+	}
 }
 
 int	clean_up(char *str, t_control *control)
